@@ -15,7 +15,7 @@ notesTable:
 cognitoUserPool:
   Type: AWS::Cognito::UserPool
   Properties:
-    UserPoolName: MyNotesUP
+    UserPoolName: MyNotesUP-${self:provider.stage}
 
 # User pool web client
 cognitoUserPoolWebClient:
@@ -23,10 +23,30 @@ cognitoUserPoolWebClient:
   Properties:
     UserPoolId: !Ref cognitoUserPool
     ClientName: web
+    AllowedOAuthFlowsUserPoolClient: true
+    SupportedIdentityProviders:
+      - COGNITO
+    AllowedOAuthScopes:
+      - phone
+      - email
+      - profile
+      - openid
+    AllowedOAuthFlows:
+      - implicit
+    CallbackURLs:
+      - http://localhost:3000
 
 # User pool web domain
 cognitoUserPoolDomain:
   Type: AWS::Cognito::UserPoolDomain
   Properties:
     UserPoolId: !Ref cognitoUserPool
-    Domain: mynotescdnew
+    Domain: mynotescdnew-${self:provider.stage}
+
+# Application parameters
+userPoolArnParam:
+  Type: AWS::SSM::Parameter
+  Properties:
+    Name: /notes/${self:provider.stage}/userPoolArn
+    Type: String
+    Value: !GetAtt cognitoUserPool.Arn
