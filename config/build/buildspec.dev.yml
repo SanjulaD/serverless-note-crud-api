@@ -8,23 +8,19 @@ phases:
     commands:
       - echo Installing serverless CLI
       - npm i -g serverless@2
-      - cd notes
-      - echo Installing NPM dependencies of notes service
+      - echo Installing npm dependencies of notes service
       - npm install
-    finally:
-      - command
-      - command
-  pre_build:
+  build:
     on-failure: ABORT
     commands:
-      - echo Running tests
+      - echo Running Tests
       - npm test
       - echo Packaging the service
-      - serverless package --package my-artifact --stage dev 
+      - serverless package --package my-artifact --stage dev
 artifacts:
   files:
     - my-artifact/*
-  name: MyProjectArtifact
+  name: MyProjectArtifacts
 cache:
   paths:
-    - 'notes/node_modules/**/*'
+    - 'node_modules/**/*'
