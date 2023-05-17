@@ -22,11 +22,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - name: Install Plugin and Deploy
-      uses: serverless/github-action@v2
-      with:
-        args: -c "serverless plugin install --name serverless-iam-roles-per-function && serverless deploy"
-        entrypoint: /bin/sh
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Jest testing
+      run: npm run test 
+    # - name: Install Plugin and Deploy
+    #   uses: serverless/github-action@v2
+    #   with:
+    #     args: -c "serverless plugin install --name serverless-iam-roles-per-function && serverless deploy"
+    #     entrypoint: /bin/sh
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
