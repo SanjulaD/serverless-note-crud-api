@@ -9,8 +9,6 @@ describe('Given an authenticated uses', () => {
         init()
         let user = await an_authenticated_user();
         idToken = user.AuthenticationResult.IdToken
-
-        console.log(idToken);
     })
 
     describe('When we invoke POST /notes endpoint', () => {
