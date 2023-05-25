@@ -2,7 +2,7 @@
 
 let init = require('./steps/init')
 let { an_authenticated_user } = require('./steps/given')
-let { we_invoke_create_note, we_invoke_update_note } = require('./steps/when')
+let { we_invoke_create_note, we_invoke_update_note, we_invoke_delete_note } = require('./steps/when')
 let idToken;
 
 describe('Given an authenticated uses', () => {
@@ -36,6 +36,16 @@ describe('Given an authenticated uses', () => {
             }
 
             let result = await we_invoke_update_note({ idToken, body, noteId })
+            expect(result.statusCode).toEqual(200);
+            expect(result.body).not.toBeNull();
+        });
+    })
+
+    describe('When we invoke DELETE /notes/:id endpoint', () => {
+        it('should delete the note', async () => {
+            const noteId = 143
+
+            let result = await we_invoke_delete_note({ idToken, noteId })
             expect(result.statusCode).toEqual(200);
             expect(result.body).not.toBeNull();
         });

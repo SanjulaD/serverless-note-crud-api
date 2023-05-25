@@ -13,8 +13,6 @@ const makeHttpRequest = async (path, method, options) => {
 
     console.log(`invoking HTTP ${method} ${url}`)
 
-    console.log(`idToken: ${idToken}`)
-
     try {
         httpReq.set("Authorization", idToken)
         if (body) {
@@ -42,5 +40,10 @@ exports.we_invoke_create_note = (options) => {
 
 exports.we_invoke_update_note = (options) => {
     let response = makeHttpRequest("notes", "PUT", options);
+    return response
+}
+
+exports.we_invoke_delete_note = (options) => {
+    let response = makeHttpRequest("notes", "DELETE", options);
     return response
 }
